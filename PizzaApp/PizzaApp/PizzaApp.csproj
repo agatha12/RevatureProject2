@@ -16,4 +16,8 @@
     <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\PizzaEntities\PizzaEntities\PizzaEntities.csproj" />
+  </ItemGroup>
+
 </Project>
