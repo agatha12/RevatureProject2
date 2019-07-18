@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaEntities", "PizzaEntities\PizzaEntities.csproj", "{D63BBB4A-C544-488A-9182-C72EC59D68ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaEntities", "PizzaEntities\PizzaEntities.csproj", "{D63BBB4A-C544-488A-9182-C72EC59D68ED}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaApp", "..\PizzaApp\PizzaApp\PizzaApp.csproj", "{2978BDAE-B939-4D89-9C12-095995F8441D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{D63BBB4A-C544-488A-9182-C72EC59D68ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D63BBB4A-C544-488A-9182-C72EC59D68ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D63BBB4A-C544-488A-9182-C72EC59D68ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2978BDAE-B939-4D89-9C12-095995F8441D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2978BDAE-B939-4D89-9C12-095995F8441D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2978BDAE-B939-4D89-9C12-095995F8441D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2978BDAE-B939-4D89-9C12-095995F8441D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
