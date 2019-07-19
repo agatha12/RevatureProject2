@@ -13,16 +13,25 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
+                @Html.DisplayNameFor(model => model.firstName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LastName)
+                @Html.DisplayNameFor(model => model.lastName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address)
+                @Html.DisplayNameFor(model => model.address)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.phoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.creditCardNumber)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.expDate)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.cvc)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.email)
@@ -37,16 +46,25 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
+                @Html.DisplayFor(modelItem => item.firstName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LastName)
+                @Html.DisplayFor(modelItem => item.lastName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Address)
+                @Html.DisplayFor(modelItem => item.address)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.phoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.creditCardNumber)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.expDate)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.cvc)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.email)
@@ -55,9 +73,9 @@
                 @Html.DisplayFor(modelItem => item.password)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
             </td>
         </tr>
 }

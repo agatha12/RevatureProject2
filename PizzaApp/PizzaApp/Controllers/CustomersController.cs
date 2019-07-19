@@ -1,10 +1,273 @@
-﻿using System;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.IO;
+//using System.Linq;
+//using System.Net.Http;
+//using System.Net.Http.Headers;
+//using System.Runtime.Serialization.Json;
+//using System.Text;
+//using System.Threading.Tasks;
+//using Microsoft.AspNetCore.Mvc;
+//using Microsoft.AspNetCore.Mvc.Rendering;
+//using Microsoft.EntityFrameworkCore;
+//using Newtonsoft.Json;
+//using PizzaApp.Models;
+//using PizzaEntities;
+
+//namespace PizzaApp.Controllers
+//{
+//    public class CustomersController : Controller
+//    {
+//        private readonly PizzaAppContext _context;
+
+//        public CustomersController(PizzaAppContext context)
+//        {
+//            _context = context;
+//        }
+
+//        // GET: Customers
+//        public string Index()
+//        {
+//            // return View(await _context.Customer.ToListAsync());
+//            HttpClient client = new HttpClient();
+//            client.DefaultRequestHeaders.Accept.Clear();
+//            client.DefaultRequestHeaders.Accept.Add(
+//                new MediaTypeWithQualityHeaderValue("application/json"));
+
+//            var stringTask = client.GetStringAsync("http://localhost:50236/api/Customers");
+//            var res = stringTask.Result;
+
+//            return res;
+//        }
+
+//        // GET: Customers/Details/5 async Task<IActionResult>
+//        public string Details(int? id)
+//        {
+//            if (id == null)
+//            {
+//                return "NotFound";
+//            }
+
+//            //var customer = await _context.Customer
+//            //    .FirstOrDefaultAsync(m => m.Id == id);
+//            //if (customer == null)
+//            //{
+//            //    return NotFound();
+//            //}
+
+//            //return View(customer);
+//            HttpClient client = new HttpClient();
+//            client.DefaultRequestHeaders.Accept.Clear();
+//            client.DefaultRequestHeaders.Accept.Add(
+//                new MediaTypeWithQualityHeaderValue("application/json"));
+
+//            var stringTask = client.GetStringAsync("http://localhost:50236/api/Customers/" + id);
+//            var res = stringTask.Result;
+
+//            return res;
+//        }
+
+//        // GET: Customers/Create
+//        public IActionResult Create()
+//        {
+//            return View();
+//        }
+
+//        // POST: Customers/Create
+//        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+//        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+//        [HttpPost]
+//        [ValidateAntiForgeryToken]
+//        public async Task<IActionResult> Create([Bind("id,firstName,lastName,address,phoneNumber,email,password")] Customer customer)
+//        {
+//            //if (ModelState.IsValid)
+//            //{
+//            //    _context.Add(customer);
+//            //    await _context.SaveChangesAsync();
+//            //    return RedirectToAction(nameof(Index));
+//            //}
+
+//            HttpClient client = new HttpClient();
+//            client.DefaultRequestHeaders.Accept.Clear();
+//            client.DefaultRequestHeaders.Accept.Add(
+//                new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+//            await client.PostAsync("http://localhost:50236/api/Customers", new JsonContent(customer));
+
+
+
+//            return View();
+//        }
+
+//        // GET: Customers/Edit/5
+//        public async Task<IActionResult> Edit(int? id)
+//        {
+//            if (id == null)
+//            {
+//                return NotFound();
+//            }
+
+//            //var customer = await _context.Customer.FindAsync(id);
+
+//            HttpClient client = new HttpClient();
+//            client.DefaultRequestHeaders.Accept.Clear();
+
+//            client.DefaultRequestHeaders.Accept.Add(
+//                new MediaTypeWithQualityHeaderValue("application/json"));
+
+//            var stringTask = client.GetStringAsync("http://localhost:50236/api/Customers/"+id);
+//            var res = stringTask.Result;
+
+//            var customer = new Customer();
+//            //var json = JsonConvert.DeserializeObject(res);
+//            var ms = new MemoryStream(Encoding.UTF8.GetBytes(res));
+//            var ser = new DataContractJsonSerializer(customer.GetType());
+//            customer = ser.ReadObject(ms) as Customer;
+//            ms.Close();
+
+
+
+//            if (customer == null)
+//            {
+//                return NotFound();
+//            }
+//            return View(customer);
+//        }
+
+//        // POST: Customers/Edit/5
+//        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+//        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+//        [HttpPost]
+//        [ValidateAntiForgeryToken]
+//        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Address,phoneNumber,email,password")] Customer customer)
+//        {
+//            if (id != customer.id)
+//            {
+//                return NotFound();
+//            }
+
+//            if (ModelState.IsValid)
+//            {
+//                //try
+//                //{
+//                //    _context.Update(customer);
+//                //    await _context.SaveChangesAsync();
+//                //}
+//                //catch (DbUpdateConcurrencyException)
+//                //{
+//                //    if (!CustomerExists(customer.Id))
+//                //    {
+//                //        return NotFound();
+//                //    }
+//                //    else
+//                //    {
+//                //        throw;
+//                //    }
+//                //}
+//                //return RedirectToAction(nameof(Index));
+
+//                HttpClient client = new HttpClient();
+//                client.DefaultRequestHeaders.Accept.Clear();
+//                client.DefaultRequestHeaders.Accept.Add(
+//                    new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+//                await client.PutAsync("http://localhost:50236/api/Customers/" + id, new JsonContent(customer));
+
+
+//            }
+//            return View(customer);
+//        }
+
+//        // GET: Customers/Delete/5
+//        public async Task<IActionResult> Delete(int? id)
+//        {
+//            if (id == null)
+//            {
+//                return NotFound();
+//            }
+
+//            //var customer = await _context.Customer
+//            //    .FirstOrDefaultAsync(m => m.Id == id);
+
+
+//            HttpClient client = new HttpClient();
+//            client.DefaultRequestHeaders.Accept.Clear();
+
+//            client.DefaultRequestHeaders.Accept.Add(
+//                new MediaTypeWithQualityHeaderValue("application/json"));
+
+//            var stringTask = client.GetStringAsync("http://localhost:50236/api/Customers/" + id);
+//            var res = stringTask.Result;
+
+//            var customer = new Customer();
+//            //var json = JsonConvert.DeserializeObject(res);
+//            var ms = new MemoryStream(Encoding.UTF8.GetBytes(res));
+//            var ser = new DataContractJsonSerializer(customer.GetType());
+//            customer = ser.ReadObject(ms) as Customer;
+//            ms.Close();
+
+//            if (customer == null)
+//            {
+//                return NotFound();
+//            }
+
+//            return View(customer);
+//        }
+
+//        // POST: Customers/Delete/5
+//        [HttpPost, ActionName("Delete")]
+//        [ValidateAntiForgeryToken]
+//        public async Task<IActionResult> DeleteConfirmed(int id)
+//        {
+//            //var customer = await _context.Customer.FindAsync(id);
+//            //_context.Customer.Remove(customer);
+//            //await _context.SaveChangesAsync();
+
+//            HttpClient client = new HttpClient();
+//            client.DefaultRequestHeaders.Accept.Clear();
+//            client.DefaultRequestHeaders.Accept.Add(
+//                new MediaTypeWithQualityHeaderValue("application/json"));
+
+//            var stringTask = await client.DeleteAsync("http://localhost:50236/api/Customers/" + id);
+//            //var res = stringTask.Result;
+
+
+
+
+//            return RedirectToAction(nameof(Index));
+//        }
+
+//        private bool CustomerExists(int id)
+//        {
+//            return _context.Customer.Any(e => e.id == id);
+//        }
+//    }
+//    public class JsonContent : StringContent
+//    {
+//        public JsonContent(object obj) :
+//            base(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")
+//        { }
+//    }
+//}
+
+
+
+
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Runtime.Serialization.Json;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using PizzaApp.Models;
 using PizzaEntities;
 
@@ -19,28 +282,46 @@ namespace PizzaApp.Controllers
             _context = context;
         }
 
-        // GET: Customers
-        public async Task<IActionResult> Index()
+        // GET: Customers async Task<IActionResult>
+        public string Index()
         {
-            return View(await _context.Customer.ToListAsync());
+            //return View(await _context.Customer.ToListAsync());
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var stringTask = client.GetStringAsync("http://localhost:50236/api/Customers");
+            var res = stringTask.Result;
+
+            return res;
         }
 
-        // GET: Customers/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: Customers/Details/5 async Task<IActionResult>
+        public string Details(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                return "NotFound";
             }
 
-            var customer = await _context.Customer
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (customer == null)
-            {
-                return NotFound();
-            }
+            //var customer = await _context.Customer
+            //    .FirstOrDefaultAsync(m => m.Id == id);
+            //if (customer == null)
+            //{
+            //    return NotFound();
+            //}
 
-            return View(customer);
+            //return View(customer);
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var stringTask = client.GetStringAsync("http://localhost:50236/api/Customers/" + id);
+            var res = stringTask.Result;
+
+            return res;
         }
 
         // GET: Customers/Create
@@ -54,13 +335,30 @@ namespace PizzaApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Address,phoneNumber,email,password")] Customer customer)
+        public async Task<IActionResult> Create([Bind("id,firstName,lastName,address,phoneNumber,creditCardNumber,expDate,cvc,email,password")] Customer customer)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(customer);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //_context.Add(customer);
+                //await _context.SaveChangesAsync();
+                //return RedirectToAction(nameof(Index));
+
+                
+
+
+            
+
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+                await client.PostAsync("http://localhost:50236/api/Customers", new JsonContent(customer));
+
+
+
+                return View();
             }
             return View(customer);
         }
@@ -73,7 +371,26 @@ namespace PizzaApp.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customer.FindAsync(id);
+            //var customer = await _context.Customer.FindAsync(id);
+
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var stringTask = client.GetStringAsync("http://localhost:50236/api/Customers/" + id);
+            var res = stringTask.Result;
+
+            var customer = new Customer();
+            //var json = JsonConvert.DeserializeObject(res);
+            var ms = new MemoryStream(Encoding.UTF8.GetBytes(res));
+            var ser = new DataContractJsonSerializer(customer.GetType());
+            customer = ser.ReadObject(ms) as Customer;
+            ms.Close();
+
+
+
             if (customer == null)
             {
                 return NotFound();
@@ -86,9 +403,9 @@ namespace PizzaApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Address,phoneNumber,email,password")] Customer customer)
+        public async Task<IActionResult> Edit(int id, [Bind("id,firstName,lastName,address,phoneNumber,creditCardNumber,expDate,cvc,email,password")] Customer customer)
         {
-            if (id != customer.Id)
+            if (id != customer.id)
             {
                 return NotFound();
             }
@@ -102,7 +419,7 @@ namespace PizzaApp.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CustomerExists(customer.Id))
+                    if (!CustomerExists(customer.id))
                     {
                         return NotFound();
                     }
@@ -125,7 +442,7 @@ namespace PizzaApp.Controllers
             }
 
             var customer = await _context.Customer
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.id == id);
             if (customer == null)
             {
                 return NotFound();
@@ -147,7 +464,14 @@ namespace PizzaApp.Controllers
 
         private bool CustomerExists(int id)
         {
-            return _context.Customer.Any(e => e.Id == id);
+            return _context.Customer.Any(e => e.id == id);
         }
+
+    }
+    public class JsonContent : StringContent
+    {
+        public JsonContent(object obj) :
+            base(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")
+        { }
     }
 }
