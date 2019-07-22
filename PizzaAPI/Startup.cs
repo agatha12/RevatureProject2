@@ -38,7 +38,7 @@ namespace PizzaAPI
                 options.AddPolicy("Origins",
                     builder =>
                     {
-                        builder.WithOrigins("https://localhost:44390/")
+                        builder.WithOrigins("https://localhost:44390")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                     

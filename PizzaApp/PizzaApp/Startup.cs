@@ -33,9 +33,19 @@ namespace PizzaApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromHours(2);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
+            services.Configure<AppSettings>(Configuration.GetSection("appSettings"));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
+            
             services.AddDbContext<PizzaAppContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("PizzaAppContext")));
         }
@@ -57,6 +67,7 @@ namespace PizzaApp
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

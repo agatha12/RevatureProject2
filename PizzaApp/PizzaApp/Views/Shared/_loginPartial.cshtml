@@ -1,0 +1,28 @@
+﻿
+<div id="login"></div>
+
+<script>
+    var ls = window['localStorage'];
+     var id = ls.getItem("id")
+    
+
+    console.log(id);
+    if (id === null) {
+
+        var a = $("<a>")
+        a.text("Register")
+        a.attr("href", "https://localhost:44390/customers/create")
+        $("#login").append(a);
+    }
+    else {
+        var b = $("<button>")
+        b.text("logout")
+        b.on("click", function () {
+            console.log("hio")
+            ls.clear()
+            location.reload();
+        })
+        $("#login").append(b);
+    }
+
+</script>

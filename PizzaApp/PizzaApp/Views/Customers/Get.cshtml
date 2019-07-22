@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewData["Title"] = "Get";
+}
+
+<h2>GetCustomers</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <h2>Get a Customer</h2>
+            <div class="form-group">
+                <label for="id">Id</label>
+                <input type="text" class="form-control" id="id" />
+            </div>
+            <div>
+                <button class="btn btn-default" id="btnGetCustomer">
+                    Get
+                </button>
+            </div>
+            <div>
+                @*<input type="text" class="form-control" id="getCustomerResult" />*@
+                <ul id="getCustomerResult"></ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+<h1>@ViewData["url"]</h1>
+
+
+
+<script>
+    $('#btnGetCustomer').click(function (e) {
+        console.log(@ViewData["url"]+ "hi")
+        var getCustomerResult = $('#getCustomerResult');
+        $("#getCustomerResult").empty();
+        $.ajax({
+            contentType: 'application/json',
+            type: "GET",
+            url: "http://localhost:56766/api/customers",
+            success: function (data) {
+                console.log(data)
+                $.each(data, function (index, val) {
+                    var fullName = val.firstName + ' ' + val.lastName;
+                    getCustomerResult.append('<li>' + fullName + '</li>');
+                });
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                //$("#getCustomerResult").val(jqXHR.statusText);
+                getCustomerResult.append('<li>' + jqXHR.statusText);
+                console.log(error)
+            }
+        });
+    });
+</script>
