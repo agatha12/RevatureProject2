@@ -1,80 +1,4 @@
-﻿
-//        // GET: Customers/Delete/5
-//        public async Task<IActionResult> Delete(int? id)
-//        {
-//            if (id == null)
-//            {
-//                return NotFound();
-//            }
-
-//            //var customer = await _context.Customer
-//            //    .FirstOrDefaultAsync(m => m.Id == id);
-
-
-//            HttpClient client = new HttpClient();
-//            client.DefaultRequestHeaders.Accept.Clear();
-
-//            client.DefaultRequestHeaders.Accept.Add(
-//                new MediaTypeWithQualityHeaderValue("application/json"));
-
-//            var stringTask = client.GetStringAsync("http://localhost:50236/api/Customers/" + id);
-//            var res = stringTask.Result;
-
-//            var customer = new Customer();
-//            //var json = JsonConvert.DeserializeObject(res);
-//            var ms = new MemoryStream(Encoding.UTF8.GetBytes(res));
-//            var ser = new DataContractJsonSerializer(customer.GetType());
-//            customer = ser.ReadObject(ms) as Customer;
-//            ms.Close();
-
-//            if (customer == null)
-//            {
-//                return NotFound();
-//            }
-
-//            return View(customer);
-//        }
-
-//        // POST: Customers/Delete/5
-//        [HttpPost, ActionName("Delete")]
-//        [ValidateAntiForgeryToken]
-//        public async Task<IActionResult> DeleteConfirmed(int id)
-//        {
-//            //var customer = await _context.Customer.FindAsync(id);
-//            //_context.Customer.Remove(customer);
-//            //await _context.SaveChangesAsync();
-
-//            HttpClient client = new HttpClient();
-//            client.DefaultRequestHeaders.Accept.Clear();
-//            client.DefaultRequestHeaders.Accept.Add(
-//                new MediaTypeWithQualityHeaderValue("application/json"));
-
-//            var stringTask = await client.DeleteAsync("http://localhost:50236/api/Customers/" + id);
-//            //var res = stringTask.Result;
-
-
-
-
-//            return RedirectToAction(nameof(Index));
-//        }
-
-//        private bool CustomerExists(int id)
-//        {
-//            return _context.Customer.Any(e => e.id == id);
-//        }
-//    }
-//    public class JsonContent : StringContent
-//    {
-//        public JsonContent(object obj) :
-//            base(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")
-//        { }
-//    }
-//}
-
-
-
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -86,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using PizzaApp.Models;
 using PizzaEntities;
@@ -98,9 +23,14 @@ namespace PizzaApp.Controllers
 
         private readonly string url = "http://localhost:56766/";
 
-        public CustomersController(PizzaAppContext context)
+
+        private AppSettings _appSettings;
+
+        public CustomersController(PizzaAppContext context, IOptions<AppSettings> settings)
         {
             _context = context;
+            _appSettings = settings.Value;
+
         }
 
         // GET: Customers 
@@ -116,8 +46,9 @@ namespace PizzaApp.Controllers
             var res = stringTask.Result;
 
             List<Customer> customers = JsonConvert.DeserializeObject<List<Customer>>(res);
-
-            return View(customers);
+            ViewData["url"] = _appSettings.APIUrl;
+            // return View(customers);
+            return View("Get");
         }
 
         // GET: Customers/Details/5 
@@ -151,13 +82,16 @@ namespace PizzaApp.Controllers
             customer = ser.ReadObject(ms) as Customer;
             ms.Close();
 
-            return View(customer);
+            //return View(customer);
+            return View("GetOne");
         }
 
         // GET: Customers/Create
         public IActionResult Create()
         {
-            return View();
+            ViewData["id"] = RandomNumbers.GenerateRandomId();
+
+            return View("Register");
         }
 
         // POST: Customers/Create
@@ -338,5 +272,18 @@ namespace PizzaApp.Controllers
         public JsonContent(object obj) :
             base(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json")
         { }
+    }
+
+    public static class RandomNumbers
+    {
+        public static Random rand;
+        static RandomNumbers()
+        {
+            rand = new Random();
+        }
+        public static int GenerateRandomId()
+        {
+            return rand.Next();
+        }
     }
 }
