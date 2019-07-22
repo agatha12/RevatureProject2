@@ -28,8 +28,28 @@ namespace PizzaAPI.Controllers
             return _context.Customers;
         }
 
+        [HttpGet("{email}", Name = "GetByEmail")]
+        [Route("[action]/{email}")]
+        public async Task<IActionResult> GetCustomerByEmail([FromRoute] string email)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var customer = await _context.Customers.FirstOrDefaultAsync(n => n.email == email);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            return Ok(customer);
+
+        }
+
+
         // GET: api/Customers/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name ="GetById")]
+        //[Route("[action]/{id}")]
+        //[Route("customers/get/{id}")]
         public async Task<IActionResult> GetCustomer([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -90,7 +110,10 @@ namespace PizzaAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            if (!EmailExists(customer.email))
+            {
+                return BadRequest(ModelState);
+            }
             _context.Customers.Add(customer);
             try
             {
@@ -135,6 +158,10 @@ namespace PizzaAPI.Controllers
         private bool CustomerExists(int id)
         {
             return _context.Customers.Any(e => e.id == id);
+        }
+        private bool EmailExists(string email)
+        {
+            return _context.Customers.Any(e => e.email == email);
         }
     }
 }

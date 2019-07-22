@@ -21,7 +21,7 @@ namespace PizzaApp.Controllers
     {
         private readonly PizzaAppContext _context;
 
-        private readonly string url = "http://localhost:56766/";
+        private readonly string url = "https://localhost:44324/";
 
 
         private AppSettings _appSettings;
@@ -265,6 +265,7 @@ namespace PizzaApp.Controllers
         {
             return _context.Customer.Any(e => e.id == id);
         }
+
 
     }
     public class JsonContent : StringContent
