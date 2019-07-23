@@ -26,19 +26,19 @@
 
     </div>
 </div>
-<h1>@ViewData["url"]</h1>
+
 
 
 
 <script>
     $('#btnGetCustomer').click(function (e) {
-        console.log(@ViewData["url"]+ "hi")
+        var url = "@ViewData["url"]";
         var getCustomerResult = $('#getCustomerResult');
         $("#getCustomerResult").empty();
         $.ajax({
             contentType: 'application/json',
             type: "GET",
-            url: "http://localhost:56766/api/customers",
+            url: url+"api/customers",
             success: function (data) {
                 console.log(data)
                 $.each(data, function (index, val) {

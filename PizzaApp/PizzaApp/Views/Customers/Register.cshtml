@@ -64,7 +64,7 @@
         event.preventDefault();
 
 
-        var url = "http://localhost:56766/api/customers/";
+        var url = "@ViewData["url"]"+"/api/customers/";
         var id = @ViewData["id"]
 
         $.ajax({
