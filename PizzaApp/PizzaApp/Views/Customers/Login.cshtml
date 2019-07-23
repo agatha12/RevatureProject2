@@ -22,6 +22,7 @@
         </form>
     </div>
 </div>
+<div id="errorMessage"></div>
 
 <script>
     $('#register').click(function () {
@@ -29,25 +30,36 @@
         event.preventDefault();
 
 
-        var url = "http://localhost:56766/api/customers/";
+        var url = "@ViewData["url"]" + "api/customers/GetByEmail/";
+        var email = $("#email").val();
+        var password = $("#password").val();
 
-        Where(c => c.email == email)
 
          $.ajax({
             contentType: 'application/json',
             type: "GET",
-            url: "http://localhost:56766/api/customers/"+id.val(),
+            url: url+email,
             success: function (data) {
                 console.log(data)
-            
+                if (data.password === password) {
                     
-                    getCustomerResult.append('<li>HelloWorld</li>');
+                var ls = window['localStorage'];
+
+                    ls.setItem("id", id);
+                        window.location.href = "https://localhost:44390/";
+                }
+                else {
+                        $("#errorMessage").append("That email and password do not match out records.");
+                }
+            
+              
             
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 //$("#getCustomerResult").val(jqXHR.statusText);
-                getCustomerResult.append('<li>' + jqXHR.statusText);
-                console.log(error)
+
+                console.log(error);
+                $("#errorMessage").append("That email and password do not match out records.");
             }
         });
             

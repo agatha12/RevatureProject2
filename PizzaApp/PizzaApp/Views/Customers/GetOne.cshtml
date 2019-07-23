@@ -32,15 +32,15 @@
 
 <script>
     $('#btnGetCustomer').click(function () {
-
-        var id = $("#id")
-        console.log(id.val)
+        var url = "@ViewData["url"]";
+        var id = $("#id");
+        console.log(id.val);
         var getCustomerResult = $('#getCustomerResult');
         $("#getCustomerResult").empty();
         $.ajax({
             contentType: 'application/json',
             type: "GET",
-            url: "http://localhost:56766/api/customers/"+id.val(),
+            url: url+"api/customers/"+id.val(),
             success: function (data) {
                 console.log(data)
             

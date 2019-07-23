@@ -21,8 +21,6 @@ namespace PizzaApp.Controllers
     {
         private readonly PizzaAppContext _context;
 
-        private readonly string url = "https://localhost:44324/";
-
 
         private AppSettings _appSettings;
 
@@ -33,6 +31,14 @@ namespace PizzaApp.Controllers
 
         }
 
+        public IActionResult Login()
+        {
+            ViewData["url"] = _appSettings.APIUrl;
+
+            return View("Login");
+        }
+
+
         // GET: Customers 
         public async Task<IActionResult> Index()
         {
@@ -42,7 +48,7 @@ namespace PizzaApp.Controllers
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var stringTask = client.GetStringAsync(url+"api/Customers");
+            var stringTask = client.GetStringAsync(_appSettings.APIUrl + "api/Customers");
             var res = stringTask.Result;
 
             List<Customer> customers = JsonConvert.DeserializeObject<List<Customer>>(res);
@@ -72,7 +78,7 @@ namespace PizzaApp.Controllers
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var stringTask = client.GetStringAsync(url+"api/Customers/" + id);
+            var stringTask = client.GetStringAsync(_appSettings.APIUrl + "api/Customers/" + id);
             var res = stringTask.Result;
 
             var customer = new Customer();
@@ -81,7 +87,7 @@ namespace PizzaApp.Controllers
             var ser = new DataContractJsonSerializer(customer.GetType());
             customer = ser.ReadObject(ms) as Customer;
             ms.Close();
-
+            ViewData["url"] = _appSettings.APIUrl;
             //return View(customer);
             return View("GetOne");
         }
@@ -90,6 +96,7 @@ namespace PizzaApp.Controllers
         public IActionResult Create()
         {
             ViewData["id"] = RandomNumbers.GenerateRandomId();
+            ViewData["url"] = _appSettings.APIUrl;
 
             return View("Register");
         }
@@ -118,7 +125,7 @@ namespace PizzaApp.Controllers
                     new MediaTypeWithQualityHeaderValue("application/json"));
 
 
-                await client.PostAsync(url+"api/customers", new JsonContent(customer));
+                await client.PostAsync(_appSettings.APIUrl + "api/customers", new JsonContent(customer));
 
 
 
@@ -143,7 +150,7 @@ namespace PizzaApp.Controllers
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var stringTask = client.GetStringAsync(url+"api/Customers/" + id);
+            var stringTask = client.GetStringAsync(_appSettings.APIUrl+"api/Customers/" + id);
             var res = stringTask.Result;
 
             var customer = new Customer();
@@ -152,7 +159,7 @@ namespace PizzaApp.Controllers
             var ser = new DataContractJsonSerializer(customer.GetType());
             customer = ser.ReadObject(ms) as Customer;
             ms.Close();
-
+            ViewData["url"] = _appSettings.APIUrl;
 
 
             if (customer == null)
@@ -187,7 +194,7 @@ namespace PizzaApp.Controllers
                         new MediaTypeWithQualityHeaderValue("application/json"));
 
 
-                    await client.PutAsync(url+"api/Customers/" + id, new JsonContent(customer));
+                    await client.PutAsync(_appSettings.APIUrl+"api/Customers/" + id, new JsonContent(customer));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -222,7 +229,7 @@ namespace PizzaApp.Controllers
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var stringTask = client.GetStringAsync(url+"api/Customers/" + id);
+            var stringTask = client.GetStringAsync(_appSettings.APIUrl+"api/Customers/" + id);
             var res = stringTask.Result;
 
             var customer = new Customer();
@@ -231,7 +238,7 @@ namespace PizzaApp.Controllers
             var ser = new DataContractJsonSerializer(customer.GetType());
             customer = ser.ReadObject(ms) as Customer;
             ms.Close();
-
+            ViewData["url"] = _appSettings.APIUrl;
 
             if (customer == null)
             {
@@ -256,7 +263,7 @@ namespace PizzaApp.Controllers
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var stringTask = await client.DeleteAsync(url+"api/Customers/" + id);
+            var stringTask = await client.DeleteAsync(_appSettings.APIUrl+"api/Customers/" + id);
 
             return RedirectToAction(nameof(Index));
         }
