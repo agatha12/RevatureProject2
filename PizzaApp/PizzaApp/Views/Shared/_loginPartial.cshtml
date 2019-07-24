@@ -6,23 +6,40 @@
      var id = ls.getItem("id")
     
 
-    console.log(id);
+    console.log(ls.getItem("id"));
     if (id === null) {
 
         var a = $("<a>")
         a.text("Register")
+        a.attr("class", "loginLink")
         a.attr("href", "https://localhost:44390/customers/create")
         $("#login").append(a);
+
+        var a2 = $("<a>")
+        a2.text("Login")
+        a2.attr("class", "loginLink")
+        a2.attr("href", "https://localhost:44390/customers/login")
+        $("#login").append(a2);
     }
     else {
         var b = $("<button>")
-        b.text("logout")
+        b.text("Logout")
         b.on("click", function () {
-            console.log("hio")
+            
             ls.clear()
             location.reload();
         })
+        b.attr("id", "logoutButton")
         $("#login").append(b);
+
+        
+        var a = $("<a>")
+        a.text("Edit Your Profile")
+        a.attr("class", "loginLink")
+        a.attr("href", "https://localhost:44390/customers/edit/"+id)
+        $("#login").append(a);
+
+   
     }
 
 </script>
