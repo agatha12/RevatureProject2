@@ -58,3 +58,17 @@ body {
 #login{
     float: right;
 }
+
+.loginLink{
+    margin: 5px;
+    color: black;
+}
+.loginLink:hover{
+    color: black;
+    text-decoration: none;
+}
+
+#logoutButton{
+    background-color: transparent;
+    border-color: transparent;
+}

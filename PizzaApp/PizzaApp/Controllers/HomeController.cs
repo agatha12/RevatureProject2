@@ -12,45 +12,57 @@ using PizzaEntities;
 using System.IO;
 using System.Text;
 using System.Runtime.Serialization.Json;
+using Microsoft.Extensions.Options;
 
 namespace PizzaApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly string url = "http://localhost:56766/";
+        
+
+        private AppSettings _appSettings;
+
+        public HomeController(PizzaAppContext context, IOptions<AppSettings> settings)
+        {
+           
+            _appSettings = settings.Value;
+
+        }
         public IActionResult Index()
         {
-            var name = HttpContext.Session.GetString("Name");
-            var id = HttpContext.Session.GetInt32("id");
-            ViewData["Name"] = name;
-            ViewData["id"] = id;
+            //var name = HttpContext.Session.GetString("Name");
+            //var id = HttpContext.Session.GetInt32("id");
+            //ViewData["Name"] = name;
+            //ViewData["id"] = id;
+
+            ViewData["url"] = _appSettings.APIUrl;
 
             return View();
         }
 
         public IActionResult Register(int id)
         {
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
+            //HttpClient client = new HttpClient();
+            //client.DefaultRequestHeaders.Accept.Clear();
+            //client.DefaultRequestHeaders.Accept.Add(
+            //    new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var stringTask = client.GetStringAsync(url + "api/Customers/" + id);
-            var res = stringTask.Result;
+            //var stringTask = client.GetStringAsync(url + "api/Customers/" + id);
+            //var res = stringTask.Result;
 
-            var customer = new Customer();
-            //var json = JsonConvert.DeserializeObject(res);
-            var ms = new MemoryStream(Encoding.UTF8.GetBytes(res));
-            var ser = new DataContractJsonSerializer(customer.GetType());
-            customer = ser.ReadObject(ms) as Customer;
-            ms.Close();
+            //var customer = new Customer();
+            ////var json = JsonConvert.DeserializeObject(res);
+            //var ms = new MemoryStream(Encoding.UTF8.GetBytes(res));
+            //var ser = new DataContractJsonSerializer(customer.GetType());
+            //customer = ser.ReadObject(ms) as Customer;
+            //ms.Close();
 
-            var name = customer.firstName;
+            //var name = customer.firstName;
 
-            HttpContext.Session.SetString("Name", name);
-            HttpContext.Session.SetInt32("id", id);
-            ViewData["Name"] = name;
-            ViewData["id"] = id;
+            //HttpContext.Session.SetString("Name", name);
+            //HttpContext.Session.SetInt32("id", id);
+            //ViewData["Name"] = name;
+            //ViewData["id"] = id;
             return View("Index");
         }
 

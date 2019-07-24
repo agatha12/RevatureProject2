@@ -160,6 +160,7 @@ namespace PizzaApp.Controllers
             customer = ser.ReadObject(ms) as Customer;
             ms.Close();
             ViewData["url"] = _appSettings.APIUrl;
+            ViewData["password"] = customer.password;
 
 
             if (customer == null)
@@ -207,7 +208,7 @@ namespace PizzaApp.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
             return View(customer);
         }
