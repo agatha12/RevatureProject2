@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using PizzaApp.Models;
 using PizzaEntities;
 
@@ -13,16 +17,31 @@ namespace PizzaApp.Controllers
     public class PizzasController : Controller
     {
         private readonly PizzaAppContext _context;
+        private AppSettings _appSettings;
 
-        public PizzasController(PizzaAppContext context)
+        public PizzasController(PizzaAppContext context, IOptions<AppSettings> settings)
         {
             _context = context;
+            _appSettings = settings.Value;
         }
 
         // GET: Pizzas
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Pizza.ToListAsync());
+            //return View(await _context.Pizza.ToListAsync());
+
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var stringTask = client.GetStringAsync(_appSettings.APIUrl + "api/Pizzas");
+            var res = stringTask.Result;
+
+            List<Pizza> pizzas = JsonConvert.DeserializeObject<List<Pizza>>(res);
+            ViewData["url"] = _appSettings.APIUrl;
+
+            return View("Create");
         }
 
         // GET: Pizzas/Details/5
@@ -46,6 +65,9 @@ namespace PizzaApp.Controllers
         // GET: Pizzas/Create
         public IActionResult Create()
         {
+            ViewData["id"] = RandomNumbers.GenerateRandomId();
+            ViewData["OrderId"] = RandomNumbers.GenerateRandomId();
+            ViewData["url"] = _appSettings.APIUrl;
             return View();
         }
 
@@ -58,9 +80,19 @@ namespace PizzaApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(pizza);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //_context.Add(pizza);
+                //await _context.SaveChangesAsync();
+                //return RedirectToAction(nameof(Index));
+
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+                await client.PostAsync(_appSettings.APIUrl + "api/pizzas", new JsonContent(pizza));
+
+               // localStorage.setItem("orderId", pizza.OrderId);
             }
             return View(pizza);
         }
@@ -150,4 +182,5 @@ namespace PizzaApp.Controllers
             return _context.Pizza.Any(e => e.id == id);
         }
     }
+
 }

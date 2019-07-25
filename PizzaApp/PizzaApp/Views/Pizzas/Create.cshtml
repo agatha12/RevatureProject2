@@ -10,37 +10,57 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <!--<form>-->
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="id" class="control-label"></label>
-                <input asp-for="id" class="form-control" />
+                @*<label asp-for="id" class="control-label"></label>*@
+                <input hidden asp-for="id" class="form-control" value="@ViewData["id"]" />
                 <span asp-validation-for="id" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="OrderId" class="control-label"></label>
-                <input asp-for="OrderId" class="form-control" />
+                @*<label asp-for="OrderId" class="control-label"></label>*@
+                <input hidden asp-for="OrderId" class="form-control" value="@ViewData["OrderId"]" />
                 <span asp-validation-for="OrderId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="size" class="control-label"></label>
-                <input asp-for="size" class="form-control" />
+                @*<input asp-for="size" class="form-control" />*@
+                <select asp-for="size" id="size" class="form-control">
+                    <option value="small">Small</option>
+                    <option value="medium">Medium</option>
+                    <option value="large">Large</option>
+                </select>
                 <span asp-validation-for="size" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="sauce" class="control-label"></label>
-                <input asp-for="sauce" class="form-control" />
+                @* <input asp-for="sauce" class="form-control" />*@
+                <select asp-for="sauce" id="sauce" class="form-control">
+                    <option value="sauce1">Sauce1</option>
+                    <option value="sauce2">Sauce2</option>
+                    <option value="sauce3">Sauce3</option>
+                </select>
                 <span asp-validation-for="sauce" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="crust" class="control-label"></label>
-                <input asp-for="crust" class="form-control" />
-                <span asp-validation-for="crust" class="text-danger"></span>
+                @*<input asp-for="crust" class="form-control" />*@
+                <select asp-for="crust" id="crust" class="form-control">
+                    <option value="crust1">Crust1</option>
+                    <option value="crust2">Crust2</option>
+                    <option value="crust3">Crust3</option>
+                </select>
+                <span asp-validation-for="crust" class="text-danger" ></span>
+            </div>
+            <div id="test">
+
+
+
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input id="btnCreatePizza" type="submit" value="Create" class="btn btn-default" />
             </div>
-        </form>
+        <!--</form>-->
     </div>
 </div>
 
@@ -48,6 +68,108 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+<div>
+    <h4>My Order</h4>
+
+</div>
+
+
+
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<script>
+    $("document").ready(getToppings())
+
+    function getToppings() {
+        var url = "@ViewData["url"]";
+        var testResult = $('#test');
+        testResult.empty();
+        $.ajax({
+            contentType: 'application/json',
+            type: "GET",
+            url: url+"api/toppings",
+            success: function (data) {
+                console.log(data)
+                $.each(data, function (index, val) {
+                    var i = $("<input>")
+                    i.attr("type", "checkbox");
+                    i.attr("value", val.id)
+
+
+                    testResult.append(i);
+                    //testResult.append('<label>');
+                    testResult.append(val.name);
+                    testResult.append("<br>");
+                });
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+               
+                console.log(errorThrown)
+            }
+        });
+    };
+
+
+    function createPizza() {
+
+        event.preventDefault();
+
+
+        var url = "@ViewData["url"]" + "/api/pizzas/";
+        var id = "@ViewData["id"]";
+        var OrderId = "@ViewData["OrderId"]";
+        var order = JSON.stringify({
+            id: id,
+            OrderId: OrderId,
+            size: $("#size").val(),
+            crust: $("#crust").val(),
+            sauce: $("#sauce").val()
+        })
+            console.log(order)
+
+        $.ajax({
+            contentType: 'application/json',
+            type: "POST",
+            url: url,
+            data: order,
+            success: function (data, textStatus, jqXHR) {
+                console.log(data)
+                console.log(textStatus)
+                console.log(jqXHR)
+
+              
+
+                var ls = window['localStorage'];
+
+                ls.setItem("id", id);
+                ls.setItem("OrderId", OrderId);
+
+                //window.location.href = "https://localhost:61251/Pizzas/Create" 
+                window.location.href = '@Url.Action("Create", "Pizzas")';
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(errorThrown)
+            }
+        });
+
+
+    }
+
+        $('#btnCreatePizza').click(function () {
+            createPizza();
+        });
+
+    
+
+</script>
+
+
+@*<input type="checkbox" id="topping1" name="toppings" value="topping1" />
+<label for="topping1">Topping 1</label>
+<br />*@

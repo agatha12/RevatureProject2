@@ -26,5 +26,7 @@ namespace PizzaEntities
         [Required]
         [DataMember]
         public string crust { get; set; }
+        //[NotMapped]
+        //public List<Topping> toppings { get; set; }
     }
 }
