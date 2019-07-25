@@ -46,8 +46,10 @@
                     
                 var ls = window['localStorage'];
 
-                    ls.setItem("id", id);
-                        window.location.href = "https://localhost:55832/";
+
+                    ls.setItem("id", data.id);
+                        window.location.href = "https://localhost:44390/";
+
                 }
                 else {
                         $("#errorMessage").append("That email and password do not match out records.");

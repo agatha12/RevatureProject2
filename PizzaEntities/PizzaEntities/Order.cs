@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
@@ -27,5 +28,7 @@ namespace PizzaEntities
         [Required]
         [DataMember]
         public decimal price { get; set; }
+        //[NotMapped]
+        //public List<Pizza> pizzas { get; set; }
     }
 }
