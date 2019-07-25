@@ -38,7 +38,7 @@ namespace PizzaAPI
                 options.AddPolicy("Origins",
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:61251", "http://localhost:4200")
+                        builder.WithOrigins("http://localhost:55832", "https://localhost:44324","https://localhost:44390", "http://localhost:4200")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                     
@@ -60,10 +60,8 @@ namespace PizzaAPI
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseCors("Origins");
-
+            app.UseHttpsRedirection();
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseMvc();

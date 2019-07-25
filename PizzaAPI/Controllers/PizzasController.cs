@@ -49,6 +49,22 @@ namespace PizzaAPI.Controllers
             return Ok(pizza);
         }
 
+        [HttpGet]
+        [Route("GetPrice/{pizzaId}")]
+        public async Task<decimal> getPizzaPrice([FromRoute] int pizzaId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return 0.0m;
+            }
+            var ourPizza= await _context.Pizza.FirstOrDefaultAsync(n => n.id == pizzaId);
+            if(ourPizza == null)
+            {
+                return 0.0m;
+            }
+            return await _context.getPizzaPriceAsync(pizzaId);
+        }
+
         // PUT: api/Pizzas/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPizza([FromRoute] int id, [FromBody] Pizza pizza)
