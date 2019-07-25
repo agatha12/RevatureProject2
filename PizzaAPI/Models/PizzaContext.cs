@@ -20,6 +20,48 @@ namespace PizzaApp.Models
         public DbSet<PizzaTopping> PizzaToppings { get; set; }
         public DbSet<Topping> Toppings { get; set; }
 
+        // Function to get individual price 
+        //using toppings first then accounting for size
+        public async Task<decimal> getPizzaPriceAsync(int givenPizzaId)
+        {
+            decimal totalPrice = 0m;
+            var toppings = PizzaToppings.Where(n => n.pizzaId == givenPizzaId);
+            foreach(PizzaTopping topping in toppings)
+            {
+                // Query database and add all topping prices to pizza
+                var toppingObject = await Toppings.FirstOrDefaultAsync(n => n.id == topping.toppingId);
+                totalPrice += toppingObject.price;
+            }
+            var ourPizza = await Pizza.SingleOrDefaultAsync(n => n.id == givenPizzaId);
+            switch (ourPizza.size)
+            {
+                case "small":
+                    break;
+                case "medium":
+                    totalPrice += 3.00m;
+                    break;
+                case "large":
+                    totalPrice += 6.00m;
+                    break;
+                default:
+                    break;
+            }
+            return totalPrice;
+        }
+        // Function to get the total order price
+        // using aforementioned getPizzaPriceAsync
+        // as a helper function
+        public async Task<decimal> getTotalOrderPriceAsync(int givenOrderId)
+        {
+            decimal totalPrice = 0m;
+            var pizzasInOrder = Pizza.Where(n => n.OrderId == givenOrderId);
+            foreach(Pizza pizza in pizzasInOrder)
+            {
+                totalPrice += await getPizzaPriceAsync(pizza.id);
+            }
+            return totalPrice;
+        }
+
     }
 }
 

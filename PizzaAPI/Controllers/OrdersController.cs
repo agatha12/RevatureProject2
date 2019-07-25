@@ -47,6 +47,22 @@ namespace PizzaAPI.Controllers
             return Ok(order);
         }
 
+        [HttpGet]
+        [Route("GetPrice/{orderId}")]
+        public async Task<decimal> getOrderPrice([FromRoute] int orderId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return 0.0m;
+            }
+            var atLeastOnePizza = await _context.Pizza.FirstOrDefaultAsync(n => n.OrderId == orderId);
+            if(atLeastOnePizza == null)
+            {
+                return 0.0m;
+            }
+            return await _context.getTotalOrderPriceAsync(orderId);
+        }
+
         // PUT: api/Orders/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOrder([FromRoute] int id, [FromBody] Order order)
