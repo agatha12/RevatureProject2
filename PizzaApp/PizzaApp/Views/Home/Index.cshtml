@@ -2,17 +2,14 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
 
 <div id="error"></div>
 
 <!-- Button trigger modal -->
-<button id="changeCard" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-    Change Credit Card
-</button>
+@*<button id="changeCard" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Change Credit Card
+    </button>*@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -48,6 +45,8 @@
 
 <script>
 
+
+
     var ls = window['localStorage'];
      var id = ls.getItem("id")
     console.log(id)
@@ -56,7 +55,7 @@
 
     $("#changeCard").on("click", function changeCard() {
 
-           
+
 
         $.ajax({
             contentType: 'application/json',
@@ -103,7 +102,7 @@
                 $("#status").append("<p>There has been an error updating your customer information</p>")
             }
         });
-        
+
     })
 
 
