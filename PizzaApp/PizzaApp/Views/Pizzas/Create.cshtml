@@ -36,9 +36,9 @@
                 <label asp-for="sauce" class="control-label"></label>
                 @* <input asp-for="sauce" class="form-control" />*@
                 <select asp-for="sauce" id="sauce" class="form-control">
-                    <option value="sauce1">Sauce1</option>
-                    <option value="sauce2">Sauce2</option>
-                    <option value="sauce3">Sauce3</option>
+                    <option value="tomato">Tomato</option>
+                    <option value="barbecue">Barbecue</option>
+                    <option value="buffalo">Buffalo</option>
                 </select>
                 <span asp-validation-for="sauce" class="text-danger"></span>
             </div>
@@ -46,15 +46,13 @@
                 <label asp-for="crust" class="control-label"></label>
                 @*<input asp-for="crust" class="form-control" />*@
                 <select asp-for="crust" id="crust" class="form-control">
-                    <option value="crust1">Crust1</option>
-                    <option value="crust2">Crust2</option>
-                    <option value="crust3">Crust3</option>
+                    <option value="regular">Regular</option>
+                    <option value="pan">Pan</option>
+                    <option value="deepdish">Deep Dish</option>
                 </select>
                 <span asp-validation-for="crust" class="text-danger" ></span>
             </div>
-            <div id="test">
-
-
+            <div id="toppings">
 
             </div>
             <div class="form-group">
@@ -85,8 +83,8 @@
 
     function getToppings() {
         var url = "@ViewData["url"]";
-        var testResult = $('#test');
-        testResult.empty();
+        var toppingResult = $('#toppings');
+        toppingResult.empty();
         $.ajax({
             contentType: 'application/json',
             type: "GET",
@@ -94,19 +92,24 @@
             success: function (data) {
                 console.log(data)
                 $.each(data, function (index, val) {
-                    var i = $("<input>")
-                    i.attr("type", "checkbox");
-                    i.attr("value", val.id)
+                    var input = $("<input>");
+                    input.attr("type", "checkbox");
+                    input.attr("id", val.name);
+                    input.attr("name", "toppings");
+                    input.attr("value", val.id);
+                    input.attr("class", "chkBoxTopping");
+                    input.attr("checked", false);
 
+                    var label = $("<label>");
+                    label.attr("for", val.name);
+                    label.html(`${val.name} $${val.price.toFixed(2)}`);
 
-                    testResult.append(i);
-                    //testResult.append('<label>');
-                    testResult.append(val.name);
-                    testResult.append("<br>");
+                    toppingResult.append(input);
+                    toppingResult.append(label);
+                    toppingResult.append("<br>");
                 });
             },
             error: function (jqXHR, textStatus, errorThrown) {
-               
                 console.log(errorThrown)
             }
         });
@@ -116,7 +119,6 @@
     function createPizza() {
 
         event.preventDefault();
-
 
         var url = "@ViewData["url"]" + "/api/pizzas/";
         var id = "@ViewData["id"]";
@@ -140,7 +142,7 @@
                 console.log(textStatus)
                 console.log(jqXHR)
 
-              
+                createToppings(data.id);
 
                 var ls = window['localStorage'];
 
@@ -158,18 +160,55 @@
             }
         });
 
+    }
 
+    function createToppings(pId) {
+        let toppingsList = [];
+
+        $('.chkBoxTopping').each(function () {
+            if ($(this).prop('checked')) {
+
+                let url = "@ViewData["url"]" + "/api/pizzatoppings/";
+                let id = Math.floor(Math.random()*1000000);
+                let pizzaId = pId;
+                let pizzaTopping = JSON.stringify({
+                    id: id,
+                    pizzaId: pizzaId,
+                    ToppingId: $(this).attr('value')
+                })
+
+                //console.log(pizzaTopping)
+                //console.log($(this).attr('value'));
+                //console.log($(this).attr('id'));
+
+                $.ajax({
+                    contentType: 'application/json',
+                    type: "POST",
+                    url: url,
+                    data: pizzaTopping,
+                    success: function (data, textStatus, jqXHR) {
+                        console.log(data)
+                        console.log(textStatus)
+                        console.log(jqXHR)
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR);
+                        console.log(textStatus);
+                        console.log(errorThrown);
+                    },
+                    async: false
+                })
+            }
+            
+           
+        });
     }
 
         $('#btnCreatePizza').click(function () {
             createPizza();
+          
         });
 
     
 
 </script>
-
-
-@*<input type="checkbox" id="topping1" name="toppings" value="topping1" />
-<label for="topping1">Topping 1</label>
-<br />*@
