@@ -1,0 +1,16 @@
+<p>pizza works!</p>
+
+<select>Crust
+    <option></option>
+</select>
+<div *ngIf="toppings">
+    <div *ngFor="let topping of toppings">
+        <input type="checkbox" value="{{ topping.id }}">
+        {{ topping.name}}
+        <br>
+        
+
+    </div>
+
+</div>
+
