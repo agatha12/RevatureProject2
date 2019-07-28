@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Topping } from '../topping';
-import { ToppingsService } from '../toppings.service';
+import { Topping } from '../classes/topping';
+import { ToppingsService } from '../services/toppings.service';
 
 @Component({
   selector: 'app-pizza',
