@@ -93,8 +93,10 @@
                 @HttpContext.Session.SetString("Name", name);*@
 
                 var ls = window['localStorage'];
+                 let Orderid = Math.floor(Math.random()*1000000);
 
                 ls.setItem("id", id);
+                ls.setItem("OrderId", Orderid)
 
                 window.location="@Url.Action("Index", "Home")"
 

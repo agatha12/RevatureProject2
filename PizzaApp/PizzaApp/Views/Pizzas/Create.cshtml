@@ -120,9 +120,12 @@
 
         event.preventDefault();
 
-        var url = "@ViewData["url"]" + "/api/pizzas/";
+        
+        var ls = window['localStorage'];
+
+        var url = "@ViewData["url"]" + "api/pizzas/";
         var id = "@ViewData["id"]";
-        var OrderId = "@ViewData["OrderId"]";
+        var OrderId = ls.getItem("OrderId");
         var order = JSON.stringify({
             id: id,
             OrderId: OrderId,
@@ -144,10 +147,9 @@
 
                 createToppings(data.id);
 
-                var ls = window['localStorage'];
 
                 ls.setItem("id", id);
-                ls.setItem("OrderId", OrderId);
+        
 
                 //window.location.href = "https://localhost:61251/Pizzas/Create" 
                 window.location.href = '@Url.Action("Create", "Pizzas")';
@@ -168,7 +170,7 @@
         $('.chkBoxTopping').each(function () {
             if ($(this).prop('checked')) {
 
-                let url = "@ViewData["url"]" + "/api/pizzatoppings/";
+                let url = "@ViewData["url"]" + "api/pizzatoppings/";
                 let id = Math.floor(Math.random()*1000000);
                 let pizzaId = pId;
                 let pizzaTopping = JSON.stringify({
