@@ -64,7 +64,7 @@
         event.preventDefault();
 
 
-        var url = "@ViewData["url"]"+"/api/customers/";
+        var url = "@ViewData["url"]"+"api/customers/";
         var id = @ViewData["id"]
 
         $.ajax({
@@ -96,7 +96,8 @@
 
                 ls.setItem("id", id);
 
-                window.location.href = "http://localhost:55832/Home/Register/"+id;
+                window.location="@Url.Action("Index", "Home")"
+
 
             },
             error: function (jqXHR, textStatus, errorThrown) {

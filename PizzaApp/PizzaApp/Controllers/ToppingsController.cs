@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using PizzaApp.Models;
 using PizzaEntities;
 
@@ -14,9 +17,12 @@ namespace PizzaApp.Controllers
     {
         private readonly PizzaAppContext _context;
 
-        public ToppingsController(PizzaAppContext context)
+        private AppSettings _appSettings;
+        public ToppingsController(PizzaAppContext context, IOptions<AppSettings> settings)
         {
             _context = context;
+            _appSettings = settings.Value;
+
         }
 
         // GET: Toppings
@@ -58,9 +64,23 @@ namespace PizzaApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(topping);
-                await _context.SaveChangesAsync();
+                //_context.Add(topping);
+                //await _context.SaveChangesAsync();
+                //return RedirectToAction(nameof(Index));
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+                await client.PostAsync(_appSettings.APIUrl + "api/toppings", new JsonContent(topping));
+
+
+
                 return RedirectToAction(nameof(Index));
+
+
+
             }
             return View(topping);
         }
