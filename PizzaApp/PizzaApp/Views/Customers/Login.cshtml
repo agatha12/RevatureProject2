@@ -44,10 +44,13 @@
                 var id = data.id;
                 if (data.password === password) {
                     
-                var ls = window['localStorage'];
+                    var ls = window['localStorage'];
+                    let OrderId = Math.floor(Math.random() * 1000000);
+                    console.log(OrderId)
 
 
                     ls.setItem("id", data.id);
+                      ls.setItem("OrderId", OrderId)
                        window.location="@Url.Action("Index", "Home")"
 
                 }
