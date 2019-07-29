@@ -156,8 +156,15 @@ namespace PizzaApp.Controllers
                 return NotFound();
             }
 
-            var pizza = await _context.Pizza
-                .FirstOrDefaultAsync(m => m.id == id);
+            //var pizza = await _context.Pizza
+            //    .FirstOrDefaultAsync(m => m.id == id);
+            
+            Pizza pizza = new Pizza();
+            HttpClient client = new HttpClient();
+            //client.GetAsync();
+
+            //await client.DeleteAsync($"http://localhost:61230/api/pizzas/{id}");
+            await client.DeleteAsync($"{_appSettings.APIUrl}/api/pizzas/{id}");
             if (pizza == null)
             {
                 return NotFound();
