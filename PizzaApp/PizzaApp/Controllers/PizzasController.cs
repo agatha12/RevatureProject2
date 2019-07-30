@@ -191,9 +191,6 @@ namespace PizzaApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            //var pizza = await _context.Pizza.FindAsync(id);
-            //_context.Pizza.Remove(pizza);
-            //await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
