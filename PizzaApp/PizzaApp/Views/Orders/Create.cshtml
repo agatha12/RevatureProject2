@@ -113,6 +113,11 @@
                     PizzaResult.append("|");
                     PizzaResult.append("<br>");
                     appendToppings(PizzaResult, val.id);
+                    var a = $("<a>")
+                    a.attr("href", "http://localhost:55832/Pizzas/Delete/"+val.id)
+                    a.text("Delete")
+                    
+                    PizzaResult.append(a);
                     //PizzaResult.append();
                 });
             }
