@@ -3,18 +3,30 @@
 }
 
 
-<div class="parallax-container">
-    <div class="parallax"><img style="opacity: 1; width: 100%" src="~/pizza3.jpg"></div>
-</div>
-<div class="section white">
-    <div id="buttonDiv">
-            <a id="a" href="/pizzas/create"><button id="startOrder">Start your order</button></a>
-    </div>
-</div>
-<div class="parallax-container">
-    <div class="parallax"><img style="opacity: 1" src="~/pizza2.jpg"></div>
-</div>
+    <div id="homeDiv">
+        @*<a class="a" href="/pizzas/create"><button class="startOrder">Start your order</button></a>
 
+        <a class="a" href=""><button class="startOrder">View Orders</button></a>*@
+
+        <div class="card" style="width: 18rem;">
+            <img src="~/pizza.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Create Your Custom Pizza</h5>
+                <p class="card-text"> Choose the size, crust, sauce and toppings that you want.</p>
+                <a href="/pizzas/create" class="btn btn-danger">Start your order</a>
+            </div>
+        </div>
+
+
+        <div class="card" style="width: 18rem;">
+            <img src="~/pizza3.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">View your orders</h5>
+                <p class="card-text"> View your order history, as well as, your current orders.</p>
+                <a href="/pizzas/create" class="btn btn-danger">Start your order</a>
+            </div>
+        </div>
+    </div>
 
 
 

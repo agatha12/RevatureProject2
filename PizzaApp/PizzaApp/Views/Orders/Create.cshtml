@@ -4,42 +4,46 @@
     ViewData["Title"] = "Create";
 }
 
-<h4>Order @ViewData["OrderId"]</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <div id="Pizzas">
-        </div>
-        <form>
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <div class="checkbox" id="deliveryCheckbox">
-                    <label>
-                        <input asp-for="delivery" /> @Html.DisplayNameFor(model => model.delivery)
-                    </label>
+<div id="formDiv">
+
+    <h4>Order @ViewData["OrderId"]</h4>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+            <div id="Pizzas">
+            </div>
+            <form>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <div class="checkbox" id="deliveryCheckbox">
+                        <label>
+                            <input asp-for="delivery" /> @Html.DisplayNameFor(model => model.delivery)
+                        </label>
+                    </div>
                 </div>
-            </div>
-            <div id="ResultPrice"></div>
-            <div class="form-group">
-                <input id="createOrder" type="submit" class="btn btn-default" />
-            </div>
-        </form>
+                <div id="ResultPrice"></div>
+                <div class="form-group">
+                    <input id="createOrder" type="submit" class="btn btn-danger" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+    </div>
 
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
 
-<script>
+    <script>
     $("document").ready(function () {
         getOrderPizzas();
         getOrderPrice();
     }
     );
 
-   
+
     var ls = window['localStorage'];
     var orderId = ls.getItem("OrderId");
     var customerId = ls.getItem("id");
@@ -197,4 +201,4 @@
         postOrder();
     });
 
-</script>
+    </script>
