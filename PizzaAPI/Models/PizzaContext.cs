@@ -36,12 +36,16 @@ namespace PizzaApp.Models
             switch (ourPizza.size)
             {
                 case "small":
+                    totalPrice += 8.00m;
                     break;
                 case "medium":
-                    totalPrice += 3.00m;
+                    totalPrice += 12.00m;
                     break;
                 case "large":
-                    totalPrice += 6.00m;
+                    totalPrice += 16.00m;
+                    break;
+                case "special":
+                    totalPrice += 10.00m;
                     break;
                 default:
                     break;

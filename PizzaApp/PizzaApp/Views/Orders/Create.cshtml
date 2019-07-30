@@ -25,6 +25,7 @@
                 <div id="ResultPrice"></div>
                 <div class="form-group">
                     <input id="createOrder" type="submit" class="btn btn-danger" />
+                    <a href="/pizzas/create" class="btn btn-danger">Add Another Pizza</a>
                 </div>
             </form>
         </div>
@@ -57,7 +58,7 @@
             url: url+"api/Orders/GetPrice/"+ orderId,
             success: function (res) {
                //alert(res);
-               document.getElementById("ResultPrice").innerHTML = res;
+               document.getElementById("ResultPrice").innerHTML = res.toFixed(2);
             },
             async: false
         });
@@ -74,7 +75,7 @@
             success: function (res) {
                //alert(res); // returns the right value for each price
                //document.getElementById("ResultPrice").innerHTML = res;
-                price = res;
+                price = res.toFixed(2);
                 //return res;
             },
             async: false
@@ -199,6 +200,10 @@
 
     $('#createOrder').click(function () {
         postOrder();
+        // Sets item orderId after postedOrder
+        var ls = window['localStorage'];
+        let OrderId = Math.floor(Math.random() * 1000000);
+        ls.setItem("OrderId",OrderId);
     });
 
     </script>

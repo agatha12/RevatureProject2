@@ -141,6 +141,29 @@ namespace PizzaAPI.Controllers
             return Ok(pizzaTopping);
         }
 
+        [HttpDelete("{pizzaId}")]
+        [Route("RemoveOrderedToppings/{pizzaId}")]
+        public async Task<IActionResult> removeOrderPizzas([FromRoute] int pizzaId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var toppingsToRemove = _context.PizzaToppings.Where(n => n.pizzaId == pizzaId);
+              //  .Where(n => n.OrderId == orderId);
+            if (toppingsToRemove == null)
+            {
+                return NotFound();
+            }
+            var theToppings = await toppingsToRemove.ToListAsync();
+            foreach (PizzaTopping topping in theToppings)
+            {
+                _context.PizzaToppings.Remove(topping);
+            }
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
         private bool PizzaToppingExists(int id)
         {
             return _context.PizzaToppings.Any(e => e.id == id);
