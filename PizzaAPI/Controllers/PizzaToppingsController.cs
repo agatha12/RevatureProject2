@@ -47,6 +47,15 @@ namespace PizzaAPI.Controllers
             return Ok(pizzaTopping);
         }
 
+        // GetPizzaToppings by pizzaId
+        [HttpGet]
+        [Route("GetPizzaToppings/{pizzaId}")]
+        public IEnumerable<PizzaTopping> getPizzaToppingsForCart([FromRoute] int pizzaId)
+        {
+            var toppingsInPizza = _context.PizzaToppings.Where(n => n.pizzaId == pizzaId);
+            return toppingsInPizza;
+        }
+
         // PUT: api/PizzaToppings/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPizzaTopping([FromRoute] int id, [FromBody] PizzaTopping pizzaTopping)

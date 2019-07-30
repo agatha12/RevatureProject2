@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using PizzaApp.Models;
 using PizzaEntities;
 
@@ -13,10 +14,13 @@ namespace PizzaApp.Controllers
     public class OrdersController : Controller
     {
         private readonly PizzaAppContext _context;
+        private AppSettings _appSettings;
 
-        public OrdersController(PizzaAppContext context)
+        public OrdersController(PizzaAppContext context, IOptions<AppSettings> settings)
         {
             _context = context;
+            _appSettings = settings.Value;
+
         }
 
         // GET: Orders
@@ -46,6 +50,7 @@ namespace PizzaApp.Controllers
         // GET: Orders/Create
         public IActionResult Create()
         {
+            ViewData["url"] = _appSettings.APIUrl;
             return View();
         }
 
