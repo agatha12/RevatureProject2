@@ -57,8 +57,8 @@ namespace PizzaAPI.Controllers
             {
                 return 0.0m;
             }
-            var ourPizza= await _context.Pizza.FirstOrDefaultAsync(n => n.id == pizzaId);
-            if(ourPizza == null)
+            var ourPizza = await _context.Pizza.FirstOrDefaultAsync(n => n.id == pizzaId);
+            if (ourPizza == null)
             {
                 return 0.0m;
             }
@@ -157,6 +157,28 @@ namespace PizzaAPI.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(pizza);
+        }
+
+        [HttpDelete("{orderId}")]
+        [Route("RemoveOrderPizzas/{orderId}")]
+        public async Task<IActionResult> removeOrderPizzas([FromRoute] int orderId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var pizzasToRemove = _context.Pizza.Where(n => n.OrderId == orderId);
+            if ( pizzasToRemove == null)
+            {
+                return NotFound();
+            }
+            var thePizzas = await pizzasToRemove.ToListAsync();
+            foreach(Pizza pizza in thePizzas)
+            {
+                _context.Pizza.Remove(pizza);
+            }
+            await _context.SaveChangesAsync();
+            return Ok();
         }
 
         private bool PizzaExists(int id)

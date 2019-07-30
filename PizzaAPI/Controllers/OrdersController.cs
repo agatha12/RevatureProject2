@@ -48,6 +48,13 @@ namespace PizzaAPI.Controllers
         }
 
         [HttpGet]
+        [Route("GetOrdersForCustomer/{customerId}")]
+        public IEnumerable<Order> getCustomersOrders([FromRoute] int customerId)
+        {
+            return _context.Orders.Where(n => n.CustomerId == customerId).ToList();
+        }
+
+        [HttpGet]
         [Route("GetPrice/{orderId}")]
         public async Task<decimal> getOrderPrice([FromRoute] int orderId)
         {
