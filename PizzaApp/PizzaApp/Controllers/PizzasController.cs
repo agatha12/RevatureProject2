@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.Serialization.Json;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -159,12 +162,22 @@ namespace PizzaApp.Controllers
             //var pizza = await _context.Pizza
             //    .FirstOrDefaultAsync(m => m.id == id);
             
-            Pizza pizza = new Pizza();
+            var pizza = new Pizza();
             HttpClient client = new HttpClient();
-            //client.GetAsync();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
 
-            //await client.DeleteAsync($"http://localhost:61230/api/pizzas/{id}");
-            await client.DeleteAsync($"{_appSettings.APIUrl}/api/pizzas/{id}");
+            
+            var stringTask = client.GetStringAsync(_appSettings.APIUrl + "api/Pizzas/" + id);
+            var res = stringTask.Result;
+
+            var ms = new MemoryStream(Encoding.UTF8.GetBytes(res));
+            var ser = new DataContractJsonSerializer(pizza.GetType());
+            pizza = ser.ReadObject(ms) as Pizza;
+
+
+            await client.DeleteAsync($"{_appSettings.APIUrl}api/pizzas/{id}");
             if (pizza == null)
             {
                 return NotFound();
@@ -178,9 +191,9 @@ namespace PizzaApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var pizza = await _context.Pizza.FindAsync(id);
-            _context.Pizza.Remove(pizza);
-            await _context.SaveChangesAsync();
+            //var pizza = await _context.Pizza.FindAsync(id);
+            //_context.Pizza.Remove(pizza);
+            //await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
