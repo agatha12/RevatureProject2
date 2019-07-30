@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using PizzaApp.Models;
 using PizzaEntities;
 
@@ -24,27 +27,50 @@ namespace PizzaApp.Controllers
         }
 
         // GET: Orders
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id)
         {
-            return View(await _context.Order.ToListAsync());
+            // return View(await _context.Order.ToListAsync());
+            
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var stringTask = client.GetStringAsync(_appSettings.APIUrl + "api/Orders/GetOrdersForCustomer/"+id);
+            var res = stringTask.Result;
+
+            List<Order> orders = JsonConvert.DeserializeObject<List<Order>>(res);
+            ViewData["url"] = _appSettings.APIUrl;
+            return View(orders);
         }
 
         // GET: Orders/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
 
-            var order = await _context.Order
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (order == null)
-            {
-                return NotFound();
-            }
+            //var order = await _context.Order
+            //    .FirstOrDefaultAsync(m => m.Id == id);
+            //if (order == null)
+            //{
+            //    return NotFound();
+            //}
 
-            return View(order);
+            //return View(order);
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var stringTask = client.GetStringAsync(_appSettings.APIUrl + "api/Orders/GetOrdersForCustomer/" + id);
+            var res = stringTask.Result;
+
+            List<Order> orders = JsonConvert.DeserializeObject<List<Order>>(res);
+            ViewData["url"] = _appSettings.APIUrl;
+            return View("Index", orders);
         }
 
         // GET: Orders/Create

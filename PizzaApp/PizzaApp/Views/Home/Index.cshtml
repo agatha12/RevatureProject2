@@ -23,7 +23,9 @@
             <div class="card-body">
                 <h5 class="card-title">View your orders</h5>
                 <p class="card-text"> View your order history, as well as, your current orders.</p>
-                <a href="/pizzas/create" class="btn btn-danger">Start your order</a>
+              
+                <button class="btn btn-danger" id="viewOrders">View Orders</button>
+                
             </div>
         </div>
     </div>
@@ -139,6 +141,10 @@
             }
         });
 
+    })
+    $("#viewOrders").on("click", function (){
+
+        window.location = "http://localhost:55832/Orders/Details/" + id;
     })
 
 
