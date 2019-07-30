@@ -42,8 +42,10 @@ html {
 }
 
 body {
-   /*Margin bottom by footer height*/ 
-  margin-bottom: 60px;
+    /*Margin bottom by footer height*/
+    margin-bottom: 60px;
+    background-image: url("../pizza2.jpg");
+    font-family: 'Montserrat', sans-serif;
 }
 .footer {
   position: absolute;
@@ -54,6 +56,7 @@ body {
   height: 60px;
   line-height: 60px; 
        /*Vertically center the text there*/ 
+       background-color: white;
 }
 
 #login{
@@ -85,33 +88,47 @@ body {
 
 }
 
-#pizzaDiv {
-    height: 500px;
-    overflow: hidden;
-}
 
-#pizza {
-    width: 100%;
-}
-
-[type="checkbox"]:not(:checked) {
-    opacity: 1;
-    position: relative;
-}
-[type="checkbox"]:checked {
-    opacity: 1;
-    position: relative;
-}
-
-#startOrder{
+.startOrder{
     background-color: red;
     border-color: transparent;
     color: white;
-   
     border-radius: 5px;
-}
-#buttonDiv{
-    width:100%;
     text-align: center;
 }
+
+
+
+#homeDiv {
+    text-align: center;
+    width: 700px;
+    margin: 0 auto;
+    margin-top: 150px;
+
+}
+.card{
+    float: left;
+    text-align: center;
+    width: 300px;
+    margin: 25px;
+    heigth: 400px;
+}
+
+#formDiv{
+    background-color: white;
+    width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+#toppings{
+    text-align: left;
+}
+
+.col-md-6{
+    margin: 0 auto;
+}
+
 
