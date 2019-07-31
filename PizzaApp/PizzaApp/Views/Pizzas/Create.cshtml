@@ -4,64 +4,88 @@
     ViewData["Title"] = "Create";
 }
 
-    <div id="formDiv">
-
-        <h4>Pizza</h4>
-        <hr />
-        <div class="row">
-            <div class="col-md-6">
-                <!--<form>-->
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    @*<label asp-for="id" class="control-label"></label>*@
-                    <input hidden asp-for="id" class="form-control" value="@ViewData["id"]" />
-                    <span asp-validation-for="id" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    @*<label asp-for="OrderId" class="control-label"></label>*@
-                    <input hidden asp-for="OrderId" class="form-control" value="@ViewData["OrderId"]" />
-                    <span asp-validation-for="OrderId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="size" class="control-label"></label>
-                    @*<input asp-for="size" class="form-control" />*@
-                    <select asp-for="size" id="size" class="form-control">
-                        <option value="small">Small</option>
-                        <option value="medium">Medium</option>
-                        <option value="large">Large</option>
-                    </select>
-                    <span asp-validation-for="size" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="sauce" class="control-label"></label>
-                    @* <input asp-for="sauce" class="form-control" />*@
-                    <select asp-for="sauce" id="sauce" class="form-control">
-                        <option value="tomato">Tomato</option>
-                        <option value="barbecue">Barbecue</option>
-                        <option value="buffalo">Buffalo</option>
-                    </select>
-                    <span asp-validation-for="sauce" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="crust" class="control-label"></label>
-                    @*<input asp-for="crust" class="form-control" />*@
-                    <select asp-for="crust" id="crust" class="form-control">
-                        <option value="regular">Regular</option>
-                        <option value="pan">Pan</option>
-                        <option value="deepdish">Deep Dish</option>
-                    </select>
-                    <span asp-validation-for="crust" class="text-danger"></span>
-                </div>
-                <div id="toppings">
-
-                </div>
-                <div class="form-group">
-                    <input id="btnCreatePizza" type="submit" value="Create" class="btn btn-danger" />
-                </div>
-                <!--</form>-->
+    <div id="homeDiv" class="row">
+   
+        <div class="card" style="width: 18rem;">
+            <img src="~/pizza.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Meatlovers</h5>
+                <p class="card-text">This large pizza comes with regular crust, tomatoe sauce, ham, pepperoni and sausage.</p>
+                <a id="btnCreateMeat" href="/pizzas/create" class="btn btn-danger">Order Meat Lovers Pizza</a>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <img src="~/pizza.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Hawiian</h5>
+                <p class="card-text">This large pizza comes with regular crust, tomatoe sauce and pinapple and ham toopings.</p>
+                <a id="btnCreateHawiian" href="/pizzas/create" class="btn btn-danger">Order Hawiian Pizza</a>
             </div>
         </div>
     </div>
+
+
+<div id="formDiv">
+
+
+
+
+    <h4>Create Your Own Pizza</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <!--<form>-->
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @*<label asp-for="id" class="control-label"></label>*@
+                <input hidden asp-for="id" class="form-control" value="@ViewData["id"]" />
+                <span asp-validation-for="id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @*<label asp-for="OrderId" class="control-label"></label>*@
+                <input hidden asp-for="OrderId" class="form-control" value="@ViewData["OrderId"]" />
+                <span asp-validation-for="OrderId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="size" class="control-label"></label>
+                @*<input asp-for="size" class="form-control" />*@
+                <select asp-for="size" id="size" class="form-control">
+                    <option value="small">Small</option>
+                    <option value="medium">Medium</option>
+                    <option value="large">Large</option>
+                </select>
+                <span asp-validation-for="size" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="sauce" class="control-label"></label>
+                @* <input asp-for="sauce" class="form-control" />*@
+                <select asp-for="sauce" id="sauce" class="form-control">
+                    <option value="tomato">Tomato</option>
+                    <option value="barbecue">Barbecue</option>
+                    <option value="buffalo">Buffalo</option>
+                </select>
+                <span asp-validation-for="sauce" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="crust" class="control-label"></label>
+                @*<input asp-for="crust" class="form-control" />*@
+                <select asp-for="crust" id="crust" class="form-control">
+                    <option value="regular">Regular</option>
+                    <option value="pan">Pan</option>
+                    <option value="deepdish">Deep Dish</option>
+                </select>
+                <span asp-validation-for="crust" class="text-danger"></span>
+            </div>
+            <div id="toppings">
+
+            </div>
+            <div class="form-group">
+                <input id="btnCreatePizza" type="submit" value="Create" class="btn btn-danger" />
+            </div>
+            <!--</form>-->
+        </div>
+    </div>
+</div>
 
 
 
@@ -74,7 +98,7 @@
 
 <script>
     $("document").ready(function () {
-        
+
         var ls = window['localStorage'];
         var custId = ls.getItem("id")
 
@@ -125,7 +149,7 @@
 
         event.preventDefault();
 
-        
+
         var ls = window['localStorage'];
 
         var url = "@ViewData["url"]" + "api/pizzas/";
@@ -153,9 +177,9 @@
                 createToppings(data.id);
 
 
-        
 
-                //window.location.href = "https://localhost:61251/Pizzas/Create" 
+
+                //window.location.href = "https://localhost:61251/Pizzas/Create"
                 window.location.href = '@Url.Action("Create", "Orders")';
 
             },
@@ -205,16 +229,298 @@
                     async: false
                 })
             }
-            
-           
+
+
         });
     }
 
         $('#btnCreatePizza').click(function () {
             createPizza();
-          
+
+        });
+    
+        $('#btnCreateHawiian').click(function () {
+            createHawiian();
+
+        });
+            $('#btnCreateMeat').click(function () {
+            btnCreateMeat();
+
+        });
+    
+    function createHawiian() {
+
+        event.preventDefault();
+
+
+        var ls = window['localStorage'];
+
+        var url = "@ViewData["url"]" + "api/pizzas/";
+        var id = "@ViewData["id"]";
+        var OrderId = ls.getItem("OrderId");
+        var order = JSON.stringify({
+            id: id,
+            OrderId: OrderId,
+            size: "large",
+            crust: "regular",
+            sauce: "tomatoe"
+        })
+            console.log(order)
+
+        $.ajax({
+            contentType: 'application/json',
+            type: "POST",
+            url: url,
+            data: order,
+            success: function (data, textStatus, jqXHR) {
+                console.log(data)
+                console.log(textStatus)
+                console.log(jqXHR)
+
+                addPineapple(data.id);
+                addHam(data.id);
+
+
+
+
+                //window.location.href = "https://localhost:61251/Pizzas/Create"
+                window.location.href = '@Url.Action("Create", "Orders")';
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(errorThrown)
+            }
         });
 
+    }
+
+
+
     
+        function btnCreateMeat() {
+
+        event.preventDefault();
+
+
+        var ls = window['localStorage'];
+
+        var url = "@ViewData["url"]" + "api/pizzas/";
+        var id = "@ViewData["id"]";
+        var OrderId = ls.getItem("OrderId");
+        var order = JSON.stringify({
+            id: id,
+            OrderId: OrderId,
+            size: "large",
+            crust: "regular",
+            sauce: "tomatoe"
+        })
+            console.log(order)
+
+        $.ajax({
+            contentType: 'application/json',
+            type: "POST",
+            url: url,
+            data: order,
+            success: function (data, textStatus, jqXHR) {
+                console.log(data)
+                console.log(textStatus)
+                console.log(jqXHR)
+
+         
+                addHam(data.id);
+                addPepperoni(data.id);
+                addSausage(data.id);
+
+
+
+
+                //window.location.href = "https://localhost:61251/Pizzas/Create"
+                window.location.href = '@Url.Action("Create", "Orders")';
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(errorThrown)
+            }
+        });
+
+    }
+
+     function addPineapple(pId) {
+   
+
+                let url = "@ViewData["url"]" + "api/pizzatoppings/";
+                let id = Math.floor(Math.random()*1000000);
+                let pizzaId = pId;
+                let pizzaTopping = JSON.stringify({
+                    id: id,
+                    pizzaId: pizzaId,
+                    ToppingId: 8
+                })
+
+             
+
+                $.ajax({
+                    contentType: 'application/json',
+                    type: "POST",
+                    url: url,
+                    data: pizzaTopping,
+                    success: function (data, textStatus, jqXHR) {
+                        console.log(data)
+                        console.log(textStatus)
+                        console.log(jqXHR)
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR);
+                        console.log(textStatus);
+                        console.log(errorThrown);
+                    },
+                    async: false
+                })
+
+   
+    }
+    
+     function addHam(pId) {
+   
+
+                let url = "@ViewData["url"]" + "api/pizzatoppings/";
+                let id = Math.floor(Math.random()*1000000);
+                let pizzaId = pId;
+                let pizzaTopping = JSON.stringify({
+                    id: id,
+                    pizzaId: pizzaId,
+                    ToppingId: 6
+                })
+
+             
+
+                $.ajax({
+                    contentType: 'application/json',
+                    type: "POST",
+                    url: url,
+                    data: pizzaTopping,
+                    success: function (data, textStatus, jqXHR) {
+                        console.log(data)
+                        console.log(textStatus)
+                        console.log(jqXHR)
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR);
+                        console.log(textStatus);
+                        console.log(errorThrown);
+                    },
+                    async: false
+                })
+
+   
+    }
+         function addHam(pId) {
+   
+
+                let url = "@ViewData["url"]" + "api/pizzatoppings/";
+                let id = Math.floor(Math.random()*1000000);
+                let pizzaId = pId;
+                let pizzaTopping = JSON.stringify({
+                    id: id,
+                    pizzaId: pizzaId,
+                    ToppingId: 6
+                })
+
+             
+
+                $.ajax({
+                    contentType: 'application/json',
+                    type: "POST",
+                    url: url,
+                    data: pizzaTopping,
+                    success: function (data, textStatus, jqXHR) {
+                        console.log(data)
+                        console.log(textStatus)
+                        console.log(jqXHR)
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR);
+                        console.log(textStatus);
+                        console.log(errorThrown);
+                    },
+                    async: false
+                })
+
+   
+    }
+    function addPepperoni(pId) {
+   
+
+                let url = "@ViewData["url"]" + "api/pizzatoppings/";
+                let id = Math.floor(Math.random()*1000000);
+                let pizzaId = pId;
+                let pizzaTopping = JSON.stringify({
+                    id: id,
+                    pizzaId: pizzaId,
+                    ToppingId: 1
+                })
+
+             
+
+                $.ajax({
+                    contentType: 'application/json',
+                    type: "POST",
+                    url: url,
+                    data: pizzaTopping,
+                    success: function (data, textStatus, jqXHR) {
+                        console.log(data)
+                        console.log(textStatus)
+                        console.log(jqXHR)
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR);
+                        console.log(textStatus);
+                        console.log(errorThrown);
+                    },
+                    async: false
+                })
+
+   
+    }
+        function addSausage(pId) {
+   
+
+                let url = "@ViewData["url"]" + "api/pizzatoppings/";
+                let id = Math.floor(Math.random()*1000000);
+                let pizzaId = pId;
+                let pizzaTopping = JSON.stringify({
+                    id: id,
+                    pizzaId: pizzaId,
+                    ToppingId: 7
+                })
+
+             
+
+                $.ajax({
+                    contentType: 'application/json',
+                    type: "POST",
+                    url: url,
+                    data: pizzaTopping,
+                    success: function (data, textStatus, jqXHR) {
+                        console.log(data)
+                        console.log(textStatus)
+                        console.log(jqXHR)
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR);
+                        console.log(textStatus);
+                        console.log(errorThrown);
+                    },
+                    async: false
+                })
+
+   
+    }
+
+
 
 </script>
