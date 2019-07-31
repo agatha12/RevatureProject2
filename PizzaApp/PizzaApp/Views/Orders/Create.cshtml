@@ -58,7 +58,8 @@
             url: url+"api/Orders/GetPrice/"+ orderId,
             success: function (res) {
                //alert(res);
-               document.getElementById("ResultPrice").innerHTML = res.toFixed(2);
+                document.getElementById("ResultPrice").innerHTML = res.toFixed(2);
+                price = res.toFixed(2);
             },
             async: false
         });
@@ -118,6 +119,7 @@
                     a.text("Delete")
                     
                     PizzaResult.append(a);
+                    appendCustomerInfo(PizzaResult);
                     //PizzaResult.append();
                 });
             }
@@ -160,6 +162,29 @@
             },
             async: false
         });
+    }
+
+    function appendCustomerInfo(TheElement) {
+        $.ajax({
+            contentType: 'application/json',
+            type: 'GET',
+            url: url + "api/Customers/" + customerId,
+            success: function (res) {
+                TheElement.append("<br><br>");
+                var fullName = res.firstName + " " + res.lastName;
+                TheElement.append(fullName);
+                TheElement.append("<br><br>");
+                TheElement.append("Address: ");
+                TheElement.append(res.address);
+                TheElement.append("<br><br>");
+                var cCard = res.creditCardNumber.toString();
+                var lastFive = cCard.slice(-4);
+                TheElement.append("Credit Card ending in ");
+                TheElement.append(lastFive);
+                TheElement.append("<br><br>");
+            }
+
+        })
     }
 
     function postOrder() {
