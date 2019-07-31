@@ -1,7 +1,19 @@
-<p>pizza works!</p>
+<p>Creat a Pizza</p>
 
+<select>Size
+    <option>small</option>
+    <option>medium</option>
+    <option>large</option>
+</select>
+<select>Sauce
+    <option>Tomatoe</option>
+    <option>BBQ</option>
+    <option>Buffalo</option>
+</select>
 <select>Crust
-    <option></option>
+    <option>regular</option>
+    <option>pan</option>
+    <option>deep dish</option>
 </select>
 <div *ngIf="toppings">
     <div *ngFor="let topping of toppings">
