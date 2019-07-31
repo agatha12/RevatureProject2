@@ -1,19 +1,72 @@
-<p>Creat a Pizza</p>
+<!-- <form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
+        <h5 *ngIf="success">Your form is valid</h5>
+    
+        <label>
+            Name:
+            <input type="text" formControlName="name">
+            <div *ngIf="submitted && messageForm.controls.name.errors">
+                <div *ngIf="messageForm.controls.name.errors.required">Your name is required</div>
+            </div>
+        </label>
+    
+        <label>
+            Message:
+            <input type="text" formControlName="message">
+            <div *ngIf="submitted && messageForm.controls.message.errors">
+                <div *ngIf="messageForm.controls.message.errors.required">Your message is required</div>
+            </div>
+        </label>
+        <br>
+        <input type="submit" value="Submit">
+    
+    </form> -->
 
-<select>Size
-    <option>small</option>
-    <option>medium</option>
-    <option>large</option>
+<div class="container">
+    <h1>Create a Pizza</h1>
+    <form [formGroup]="pizzaForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="name">Size</label><br>
+            <input type="radio" class="form-control" formControlName="size" value="small">Small<br>
+            <input type="radio" class="form-control" formControlName="size" value="medium">Medium<br>
+            <input type="radio" class="form-control" formControlName="size" value="large">Large<br>
+        </div>
+        
+        <div *ngIf="toppings">
+            <div *ngFor="let topping of toppings">
+                <input formControlName="topping" type="checkbox" value="{{ topping.id }}">
+                {{ topping.name}}
+                <br>
+
+
+            </div>
+        </div>
+            
+
+
+
+
+            <button type="submit" class="btn btn-success">Submit</button>
+
+    </form>
+</div>
+<!-- 
+    <label>Size</label>
+<select id="size" (change)="sizeChange()">
+    <option value="small">small</option>
+    <option value="medium">medium</option>
+    <option value="large">large</option>
 </select>
-<select>Sauce
-    <option>Tomatoe</option>
-    <option>BBQ</option>
-    <option>Buffalo</option>
+<label>Sauce</label>
+<select id="sauce">
+    <option value="Tomatoe">Tomatoe</option>
+    <option value="BBQ">BBQ</option>
+    <option value="Buffalo">Buffalo</option>
 </select>
-<select>Crust
-    <option>regular</option>
-    <option>pan</option>
-    <option>deep dish</option>
+<label>Crust</label>
+<select id="crust">
+    <option value="regualr">regular</option>
+    <option value="pan">pan</option>
+    <option value="deep dish">deep dish</option>
 </select>
 <div *ngIf="toppings">
     <div *ngFor="let topping of toppings">
@@ -25,4 +78,7 @@
     </div>
 
 </div>
+<button type="button" id="pizzaSubmit" (click)="pizzaSubmit()">Submit</button>
 
+
+ -->

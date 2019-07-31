@@ -1,0 +1,27 @@
+<div>
+    <button (click)="getCustomerByEmail()" >View customer</button>
+</div>
+
+
+<form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+    <h5 *ngIf="success">Your form is valid</h5>
+
+    <label>
+        Email:
+        <input type="text" formControlName="email">
+        <div *ngIf="submitted && customerForm.controls.email.errors">
+            <div *ngIf="customerForm.controls.email.errors.required">Your email is required</div>
+        </div>
+    </label>
+
+    <label>
+        Password:
+        <input type="password" formControlName="password">
+        <div *ngIf="submitted && customerForm.controls.password.errors">
+            <div *ngIf="customerForm.controls.password.errors.required">Your password is required</div>
+        </div>
+    </label>
+    <br>
+    <input type="submit" value="Submit">
+
+</form>
