@@ -38,7 +38,14 @@
     }
 
     <script>
-    $("document").ready(function () {
+        $("document").ready(function () {
+        var ls = window['localStorage'];
+        var custId = ls.getItem("id")
+
+        if (custId === null) {
+            window.location= "https://pizzaapp123.azurewebsites.net"
+        }
+
         getOrderPizzas();
         getOrderPrice();
     }

@@ -142,9 +142,18 @@
         });
 
     })
-    $("#viewOrders").on("click", function (){
+    $("#viewOrders").on("click", function () {
 
-        window.location = "https://pizzaapp123.azurewebsites.net/Orders/Details/" + id;
+        var ls = window['localStorage'];
+        var custId = ls.getItem("id")
+
+        if (custId === null) {
+            window.location = "https://pizzaapp123.azurewebsites.net"
+        }
+        else {
+
+            window.location = "https://pizzaapp123.azurewebsites.net/Orders/Details/" + id;
+        }
     })
 
 

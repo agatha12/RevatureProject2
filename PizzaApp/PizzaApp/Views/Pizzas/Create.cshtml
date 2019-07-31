@@ -73,7 +73,18 @@
 }
 
 <script>
-    $("document").ready(getToppings())
+    $("document").ready(function () {
+        
+        var ls = window['localStorage'];
+        var custId = ls.getItem("id")
+
+        if (custId === null) {
+            window.location= "https://pizzaapp123.azurewebsites.net"
+        }
+
+
+        getToppings()
+    })
 
     function getToppings() {
         var url = "@ViewData["url"]";
