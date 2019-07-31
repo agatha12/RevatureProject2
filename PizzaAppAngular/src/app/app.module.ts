@@ -10,19 +10,29 @@ import { Pizza } from './classes/pizza';
 import { PizzaTopping } from './classes/pizza-topping';
 import { Order } from './classes/order';
 import { PizzaService } from './services/pizza.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CustomerComponent } from './customer/customer.component';
+import { CustomerService } from './services/customer.service';
+import { NavComponent } from './nav/nav.component';
+
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    PizzaComponent
+    PizzaComponent,
+    CustomerComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [ToppingsService, PizzaService, Topping, Pizza, PizzaTopping, Order],
+  providers: [ToppingsService, PizzaService, Topping, Pizza, PizzaTopping, Order, CustomerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -115,13 +115,16 @@
                     PizzaResult.append("<br>");
                     appendToppings(PizzaResult, val.id);
                     var a = $("<a>")
-                    a.attr("href", "http://localhost:55832/Pizzas/Delete/"+val.id)
+                    a.attr("href", "https://pizzaapp123api.azurewebsites.net/Pizzas/Delete/"+val.id)
                     a.text("Delete")
                     
                     PizzaResult.append(a);
-                    appendCustomerInfo(PizzaResult);
+                    PizzaResult.append("<br>")
+                   
                     //PizzaResult.append();
                 });
+
+                 appendCustomerInfo(PizzaResult);
             }
         });
     }
@@ -221,6 +224,7 @@
             success: function (data, textStatus, jqXHR) {
                 console.log(data)
                 console.log("actually worked!!")
+                window.location= "https://pizzaapp123.azurewebsites.net"
             },
             error: function () {
                 console.log("Did not work!!")

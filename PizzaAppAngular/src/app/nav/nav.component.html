@@ -1,0 +1,6 @@
+<ul>
+    <li><a routerLink='pizza'>Create a Pizza</a></li>
+    <li><a routerLink='customer'>Login</a></li>
+    <li  *ngIf="customer" ><button (click)="logout()">Logout</button></li>
+
+</ul>
