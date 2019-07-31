@@ -23,6 +23,47 @@
                     </div>
                 </div>
                 <div id="ResultPrice"></div>
+
+                <div id="error"></div>
+
+                <!-- Button trigger modal -->
+                <button id="changeCard" style="margin: 10px " type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+            Change Credit Card
+        </button>
+               
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+
+                                <label>Credit Card Number</label>
+                                <input type="text" class="form-control" id="ccNum" />
+                                <label>Expiration Date:</label>
+                                <input type="text" class="form-control" id="exp" />
+                                <lable>cvc</lable>
+                                <input type="text" class="form-control" id="cvc" />
+
+                                <div id="status"></div>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button id="save" type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="form-group">
                     <input id="createOrder" type="submit" class="btn btn-danger" />
                     <a href="/pizzas/create" class="btn btn-danger">Add Another Pizza</a>
@@ -36,6 +77,68 @@
     @section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     }
+
+
+<script>
+    
+    var ls = window['localStorage'];
+     var id = ls.getItem("id")
+    console.log(id)
+    var Data
+    var url = "@ViewData["url"]";
+
+    $("#changeCard").on("click", function changeCard() {
+
+
+
+        $.ajax({
+            contentType: 'application/json',
+            type: "GET",
+            url: url+"api/customers/"+id,
+            success: function (data) {
+                Data = data;
+                console.log(data)
+                $("#ccNum").val(data.creditCardNumber);
+                $("#exp").val(data.expDate);
+                $("#cvc").val(data.cvc)
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $("#status").empty();
+                $("#status").append("<p>There has been an error finding your customer information</p>")
+            }
+        });
+    })
+
+    $("#save").on("click", function saveChanges() {
+
+                $.ajax({
+            contentType: 'application/json',
+            type: "PUT",
+            url: url + "api/customers/" + id,
+            data: JSON.stringify({
+                id: Data.id,
+                firstName: Data.firstName,
+                lastName: Data.lastName,
+                address: Data.address,
+                phoneNumber: Data.phoneNumber,
+                creditCardNumber: $("#ccNum").val(),
+                expDate: $("#exp").val(),
+                cvc: $("#cvc").val(),
+                email: Data.email,
+                password: Data.password
+            }),
+                    success: function (data) {
+                        $("#status").empty();
+                $("#status").append("<p>Your credit card information has been updated</p>")
+            },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                $("#status").empty();
+                $("#status").append("<p>There has been an error updating your customer information</p>")
+            }
+        });
+
+    })
+</script>
 
     <script>
         $("document").ready(function () {
